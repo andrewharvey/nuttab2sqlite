@@ -40,12 +40,19 @@ CREATE TABLE food
   PRIMARY KEY (food_id)
 );
 
-CREATE TABLE nutriant_per_g
+CREATE TABLE nutriant
 (
-  food_id character(8),
   nutrient_id text,
   description text,
   scale text,
+
+  PRIMARY KEY (nutrient_id)
+);
+
+CREATE TABLE nutriant_per_g
+(
+  food_id character(8) REFERENCES food(food_id),
+  nutrient_id text REFERENCES nutriant(nutriant_id),
   value real,
   category text,
 
@@ -54,10 +61,8 @@ CREATE TABLE nutriant_per_g
 
 CREATE TABLE nutriant_per_g_per_ml
 (
-  food_id character(8),
-  nutrient_id text,
-  description text,
-  scale text,
+  food_id character(8) REFERENCES food(food_id),
+  nutrient_id text REFERENCES nutriant(nutriant_id),
   value real,
   category text,
 
@@ -66,7 +71,7 @@ CREATE TABLE nutriant_per_g_per_ml
 
 CREATE TABLE recipe
 (
-  food_id character(8),
+  food_id character(8) REFERENCES food(food_id),
   food_name text,
   total_weight_change real,
   ingredient_id character(8),
