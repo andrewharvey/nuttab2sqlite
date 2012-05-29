@@ -13,15 +13,15 @@
 mkdir -p "source-data/NUTTAB_2010"
 
 wget --no-clobber --output-document=source-data/NUTTAB_2010/FoodFile.tab "http://www.foodstandards.gov.au/_srcfiles/NUTTAB2010FoodFile.tab"
-wget --no-clobber --output-document=source-data/NUTTAB_2010/NutriantFile_per_g.zip "http://www.foodstandards.gov.au/_srcfiles/NUTTAB2010_%20Nutrient%20File_all%20foods%20per%20100%20g.zip"
-wget --no-clobber --output-document=source-data/NUTTAB_2010/NutriantFile_per_g_per_ml.zip "http://www.foodstandards.gov.au/_srcfiles/NUTTAB%202010_%20Nutrient%20File_combination%20solids%20per%20100%20g%20and%20liquids%20per%20100%20mL.zip"
+test -e source-data/NUTTAB_2010/NutriantFile_per_g.tab || wget --no-clobber --output-document=source-data/NUTTAB_2010/NutriantFile_per_g.zip "http://www.foodstandards.gov.au/_srcfiles/NUTTAB2010_%20Nutrient%20File_all%20foods%20per%20100%20g.zip"
+test -e source-data/NUTTAB_2010/NutriantFile_per_g_per_ml.tab || wget --no-clobber --output-document=source-data/NUTTAB_2010/NutriantFile_per_g_per_ml.zip "http://www.foodstandards.gov.au/_srcfiles/NUTTAB%202010_%20Nutrient%20File_combination%20solids%20per%20100%20g%20and%20liquids%20per%20100%20mL.zip"
 wget --no-clobber --output-document=source-data/NUTTAB_2010/NutriantFile_per_ml.tab "http://www.foodstandards.gov.au/_srcfiles/NUTTAB_2010_NutrientFile_liquidsonlyper100%20mL.txt"
 wget --no-clobber --output-document=source-data/NUTTAB_2010/RecipeFile.tab "http://www.foodstandards.gov.au/_srcfiles/NUTTABRecipeFile.tab"
 wget --no-clobber --output-document=source-data/NUTTAB_2010/RetentionFactorFile.xls "http://www.foodstandards.gov.au/_srcfiles/NUTTAB%202010%20-%20Retention%20Factor%20File.xls"
 
-unzip source-data/NUTTAB_2010/NutriantFile_per_g.zip -d source-data/NUTTAB_2010/
-mv "source-data/NUTTAB_2010/2a. NUTTAB 2010 - Nutrient File - all foods per 100 g.txt" "source-data/NUTTAB_2010/NutriantFile_per_g.tab"
-unzip source-data/NUTTAB_2010/NutriantFile_per_g_per_ml.zip -d source-data/NUTTAB_2010/
-mv "source-data/NUTTAB_2010/2c. NUTTAB 2010 - Nutrient File - combination solids per 100 g and liquids per 100 mL.txt" "source-data/NUTTAB_2010/NutriantFile_per_g_per_ml.tab"
+test -e source-data/NUTTAB_2010/NutriantFile_per_g.tab || unzip source-data/NUTTAB_2010/NutriantFile_per_g.zip -d source-data/NUTTAB_2010/
+test -e source-data/NUTTAB_2010/NutriantFile_per_g.tab || mv "source-data/NUTTAB_2010/2a. NUTTAB 2010 - Nutrient File - all foods per 100 g.txt" "source-data/NUTTAB_2010/NutriantFile_per_g.tab"
+test -e source-data/NUTTAB_2010/NutriantFile_per_g_per_ml.tab || unzip source-data/NUTTAB_2010/NutriantFile_per_g_per_ml.zip -d source-data/NUTTAB_2010/
+test -e source-data/NUTTAB_2010/NutriantFile_per_g_per_ml.tab || mv "source-data/NUTTAB_2010/2c. NUTTAB 2010 - Nutrient File - combination solids per 100 g and liquids per 100 mL.txt" "source-data/NUTTAB_2010/NutriantFile_per_g_per_ml.tab"
 
 rm -f source-data/NUTTAB_2010/NutriantFile_per_g.zip source-data/NUTTAB_2010/NutriantFile_per_g_per_ml.zip

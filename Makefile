@@ -5,7 +5,7 @@
 # rights to this work.
 # http://creativecommons.org/publicdomain/zero/1.0/
 
-all : clean-download clean download load
+all : clean download load
 
 clean-download :
 	rm -rf source-data/NUTTAB_2010
