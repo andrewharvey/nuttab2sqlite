@@ -22,8 +22,8 @@ load :
 	# prepart the import files (same as source but without the header line
 	mkdir -p "data-for-import"
 	tail -n +2 < "source-data/NUTTAB_2010/FoodFile.tab" > "data-for-import/FoodFile.tab"
-	tail -n +2 < "source-data/NUTTAB_2010/NutriantFile_per_g.tab" > "data-for-import/NutriantFile_per_g.tab"
-	tail -n +2 < "source-data/NUTTAB_2010/NutriantFile_per_g_per_ml.tab" > "data-for-import/NutriantFile_per_g_per_ml.tab"
+	tail -n +2 < "source-data/NUTTAB_2010/NutriantFile_per_g.tab" | cut -d'	' -f1-6 > "data-for-import/NutriantFile_per_g.tab"
+	tail -n +2 < "source-data/NUTTAB_2010/NutriantFile_per_g_per_ml.tab" | cut -d'	' -f1-6 > "data-for-import/NutriantFile_per_g_per_ml.tab"
 	tail -n +2 < "source-data/NUTTAB_2010/RecipeFile.tab" > "data-for-import/RecipeFile.tab"
 	# do the .import
 	sqlite3 nuttab_2010.db < src/03-load-data.load

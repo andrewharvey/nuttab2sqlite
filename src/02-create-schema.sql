@@ -48,7 +48,6 @@ CREATE TABLE nutriant_per_g
   scale text,
   value real,
   category text,
-  empty text,
 
   PRIMARY KEY (food_id, nutrient_id)
 );
@@ -61,7 +60,6 @@ CREATE TABLE nutriant_per_g_per_ml
   scale text,
   value real,
   category text,
-  empty text,
 
   PRIMARY KEY (food_id, nutrient_id)
 );
