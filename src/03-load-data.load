@@ -1,3 +1,5 @@
+PRAGMA foreign_keys = ON;
+
 .separator "\t"
 
 .import data-for-import/FoodFile.tab food
