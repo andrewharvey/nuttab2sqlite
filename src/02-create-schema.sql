@@ -45,6 +45,7 @@ CREATE TABLE nutriant
   nutriant_id text,
   description text,
   scale text,
+  category text,
 
   PRIMARY KEY (nutriant_id)
 );
@@ -55,7 +56,6 @@ CREATE TABLE food_nutriant_per_weight
   food_id character(8) REFERENCES food(food_id),
   nutrient_id text REFERENCES nutriant(nutriant_id),
   value real,
-  category text,
 
   PRIMARY KEY (food_id, nutrient_id)
 );
@@ -66,7 +66,6 @@ CREATE TABLE food_nutriant_per_volume
   food_id character(8) REFERENCES food(food_id),
   nutrient_id text REFERENCES nutriant(nutriant_id),
   value real,
-  category text,
 
   PRIMARY KEY (food_id, nutrient_id)
 );
