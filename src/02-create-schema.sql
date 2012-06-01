@@ -42,11 +42,11 @@ CREATE TABLE food
 
 CREATE TABLE nutriant
 (
-  nutrient_id text,
+  nutriant_id text,
   description text,
   scale text,
 
-  PRIMARY KEY (nutrient_id)
+  PRIMARY KEY (nutriant_id)
 );
 
 CREATE TABLE nutriant_per_g
