@@ -49,7 +49,8 @@ CREATE TABLE nutriant
   PRIMARY KEY (nutriant_id)
 );
 
-CREATE TABLE nutriant_per_g
+-- nutriants per solid and liquid foods per weight of food (per 100g of food)
+CREATE TABLE food_nutriant_per_weight
 (
   food_id character(8) REFERENCES food(food_id),
   nutrient_id text REFERENCES nutriant(nutriant_id),
@@ -59,7 +60,8 @@ CREATE TABLE nutriant_per_g
   PRIMARY KEY (food_id, nutrient_id)
 );
 
-CREATE TABLE nutriant_per_g_per_ml
+-- nutriants per liquid foods per volume (per 100mL of food)
+CREATE TABLE food_nutriant_per_volume
 (
   food_id character(8) REFERENCES food(food_id),
   nutrient_id text REFERENCES nutriant(nutriant_id),

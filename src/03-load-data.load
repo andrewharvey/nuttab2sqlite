@@ -1,6 +1,7 @@
 .separator "\t"
+
 .import data-for-import/FoodFile.tab food
 .import data-for-import/Nutriants.tab nutriant
-.import data-for-import/NutriantFile_per_g.tab nutriant_per_g
-.import data-for-import/NutriantFile_per_g_per_ml.tab nutriant_per_g_per_ml
+.import data-for-import/NutriantFile_per_g.tab food_nutriant_per_weight
+.import data-for-import/NutriantFile_per_ml.tab food_nutriant_per_volume
 .import data-for-import/RecipeFile.tab recipe
