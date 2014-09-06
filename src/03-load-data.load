@@ -2,8 +2,8 @@ PRAGMA foreign_keys = ON;
 
 .separator "\t"
 
-.import data-for-import/FoodFile.tab food
-.import data-for-import/Nutrients.tab nutrient
-.import data-for-import/NutrientFile_per_g.tab food_nutrient_per_weight
-.import data-for-import/NutrientFile_per_ml.tab food_nutrient_per_volume
-.import data-for-import/RecipeFile.tab recipe
+.import import-stage/FoodFile.tab food
+.import import-stage/Nutrients.tab nutrient
+.import import-stage/NutrientFile_per_g.tab food_nutrient_per_weight
+.import import-stage/NutrientFile_per_ml.tab food_nutrient_per_volume
+.import import-stage/RecipeFile.tab recipe

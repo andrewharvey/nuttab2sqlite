@@ -11,22 +11,23 @@ clean-download :
 	rm -rf source-data/NUTTAB_2010
 
 clean :
-	rm -rf nuttab_2010.db "data-for-import"
+	rm -rf dist import-stage
 
 download :
 	./src/01-download.sh
 
-load :
+dbload :
+	mkdir -p dist
 	# create the schema
-	sqlite3 nuttab_2010.db < src/02-create-schema.sql
-	# prepart the import files (same as source but without the header line
-	mkdir -p "data-for-import"
-	tail -n +2 < "source-data/NUTTAB_2010/FoodFile.tab" > "data-for-import/FoodFile.tab"
-	cat "source-data/NUTTAB_2010/NutrientFile_per_g.tab" | cut -d'	' -f2-4,6 | sort | uniq | grep -v '^"Nutrient ID"' > "data-for-import/Nutrients.tab"
-	tail -n +2 < "source-data/NUTTAB_2010/NutrientFile_per_g.tab" | cut -d'	' -f1,2,5 > "data-for-import/NutrientFile_per_g.tab"
-	tail -n +2 < "source-data/NUTTAB_2010/NutrientFile_per_ml.tab" | cut -d'	' -f1,2,5 > "data-for-import/NutrientFile_per_ml.tab"
-	tail -n +2 < "source-data/NUTTAB_2010/RecipeFile.tab" > "data-for-import/RecipeFile.tab"
+	sqlite3 dist/nuttab_2010.db < src/02-create-schema.sql
+	# prepare the import files (same as source but without the header line
+	mkdir -p "import-stage"
+	tail -n +2 < "source-data/NUTTAB_2010/FoodFile.tab" > "import-stage/FoodFile.tab"
+	cat "source-data/NUTTAB_2010/NutrientFile_per_g.tab" | cut -d'	' -f2-4,6 | sort | uniq | grep -v '^"Nutrient ID"' > "import-stage/Nutrients.tab"
+	tail -n +2 < "source-data/NUTTAB_2010/NutrientFile_per_g.tab" | cut -d'	' -f1,2,5 > "import-stage/NutrientFile_per_g.tab"
+	tail -n +2 < "source-data/NUTTAB_2010/NutrientFile_per_ml.tab" | cut -d'	' -f1,2,5 > "import-stage/NutrientFile_per_ml.tab"
+	tail -n +2 < "source-data/NUTTAB_2010/RecipeFile.tab" > "import-stage/RecipeFile.tab"
 	# do the .import
-	sqlite3 nuttab_2010.db < src/03-load-data.load
+	sqlite3 dist/nuttab_2010.db < src/03-load-data.load
 	# clean up
-	rm -rf "data-for-import"
+	rm -rf "import-stage"
