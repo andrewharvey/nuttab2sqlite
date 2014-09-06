@@ -19,9 +19,23 @@ my $dbh = DBI->connect("dbi:SQLite:dbname=dist/nuttab_2010.db", '', '' , {'Raise
 my $food_db = $dbh->selectall_hashref("SELECT  * FROM food;", 'food_id');
 my $nutrient = $dbh->selectall_hashref("SELECT  * FROM nutrient;", 'nutrient_id');
 
+my @food_ac;
 for my $food_id (keys %{$food_db}) {
+    my $food_group = lc($food_db->{$food_id}->{'food_group'});
+    $food_group =~ s/\ /-/g;
+    $food_group =~ s/,//g;
+    $food_group =~ s/&\ //g;
+
+    my $food_ac_item = {
+        'name' => $food_db->{$food_id}->{'name'},
+        'description' => $food_db->{$food_id}->{'description'},
+        'food_group' => $food_group
+    };
+
     delete $food_db->{$food_id}->{'sort_order'};
     delete $food_db->{$food_id}->{'food_id'};
+
+    push @food_ac, $food_ac_item;
 }
 
 for my $nutrient_id (keys %{$nutrient}) {
@@ -59,6 +73,10 @@ while ( my $row = $sth->fetchrow_hashref ) {
 open (my $food_json, '>', "dist/food.json");
 print $food_json encode_json($food_db);
 close $food_json;
+
+open (my $food_ac_json, '>', "dist/food_ac.json");
+print $food_ac_json encode_json(\@food_ac);
+close $food_ac_json;
 
 open (my $recipe_json, '>', "dist/recipe.json");
 print $recipe_json encode_json(\%recipe);
