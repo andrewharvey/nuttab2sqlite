@@ -22,9 +22,9 @@ my $nutrient = $dbh->selectall_hashref("SELECT  * FROM nutrient;", 'nutrient_id'
 my @food_ac;
 for my $food_id (keys %{$food_db}) {
     my $food_group = lc($food_db->{$food_id}->{'food_group'});
+    $food_group =~ s/\&/and/g;
     $food_group =~ s/\ /-/g;
     $food_group =~ s/,//g;
-    $food_group =~ s/&\ //g;
 
     my $food_ac_item = {
         'name' => $food_db->{$food_id}->{'name'},
