@@ -31,3 +31,7 @@ dbload :
 	sqlite3 dist/nuttab_2010.db < src/03-load-data.load
 	# clean up
 	rm -rf "import-stage"
+
+tojson :
+	mkdir -p dist
+	./src/04-sqlite-to-json.pl
