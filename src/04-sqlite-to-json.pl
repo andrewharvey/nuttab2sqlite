@@ -29,7 +29,8 @@ for my $food_id (keys %{$food_db}) {
     my $food_ac_item = {
         'name' => $food_db->{$food_id}->{'name'},
         'description' => $food_db->{$food_id}->{'description'},
-        'food_group' => $food_group
+        'food_group' => $food_group,
+        'id' => $food_id
     };
 
     delete $food_db->{$food_id}->{'sort_order'};
