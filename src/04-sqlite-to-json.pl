@@ -12,6 +12,15 @@ use autodie;
 use JSON;
 use DBI;
 
+# make nutrient keys friendlier so that in a Mustache template we can refer to
+# them using using normal object.property syntax
+sub sanitiseNutrientKey($) {
+    my ($key) = @_;
+    $key =~ s/\s/_/g;
+    $key =~ s/[\(\)\%]//g;
+    return $key;
+}
+
 # connect to sqlite db
 my $dbh = DBI->connect("dbi:SQLite:dbname=dist/nuttab_2010.db", '', '' , {'RaiseError' => 1});
 
@@ -41,6 +50,9 @@ for my $food_id (keys %{$food_db}) {
 
 for my $nutrient_id (keys %{$nutrient}) {
     delete $nutrient->{$nutrient_id}->{'nutrient_id'};
+
+    #rename key
+    $nutrient->{sanitiseNutrientKey($nutrient_id)} = delete $nutrient->{$nutrient_id};
 }
 
 # for the other tables we need to loop through results
@@ -61,12 +73,14 @@ $sth = $dbh->prepare("SELECT * FROM food_nutrient_per_volume;");
 $sth->execute();
 my %food_nutrient_per_volume;
 while ( my $row = $sth->fetchrow_hashref ) {
+    my $nutrient_id = sanitiseNutrientKey($row->{'nutrient_id'});
     $food_nutrient_per_volume{$row->{'food_id'}}{$row->{'nutrient_id'}} = $row->{'value'};
 }
 $sth = $dbh->prepare("SELECT * FROM food_nutrient_per_weight;");
 $sth->execute();
 my %food_nutrient_per_weight;
 while ( my $row = $sth->fetchrow_hashref ) {
+    my $nutrient_id = sanitiseNutrientKey($row->{'nutrient_id'});
     $food_nutrient_per_weight{$row->{'food_id'}}{$row->{'nutrient_id'}} = $row->{'value'};
 }
 
