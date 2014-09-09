@@ -21,6 +21,18 @@ sub sanitiseNutrientKey($) {
     return $key;
 }
 
+sub foodGroupCode($) {
+    my ($food_group) = @_;
+
+    my $food_group_code = lc($food_group);
+    $food_group_code =~ s/\&/and/g;
+    $food_group_code =~ s/\ /-/g;
+    $food_group_code =~ s/,//g;
+
+    return $food_group_code;
+}
+
+
 # connect to sqlite db
 my $dbh = DBI->connect("dbi:SQLite:dbname=dist/nuttab_2010.db", '', '' , {'RaiseError' => 1});
 
@@ -30,17 +42,16 @@ my $nutrient = $dbh->selectall_hashref("SELECT  * FROM nutrient;", 'nutrient_id'
 
 my @food_ac;
 for my $food_id (keys %{$food_db}) {
-    my $food_group = lc($food_db->{$food_id}->{'food_group'});
-    $food_group =~ s/\&/and/g;
-    $food_group =~ s/\ /-/g;
-    $food_group =~ s/,//g;
+    my $food_group_code = foodGroupCode($food_db->{$food_id}->{'food_group'});
 
     my $food_ac_item = {
         'name' => $food_db->{$food_id}->{'name'},
         'description' => $food_db->{$food_id}->{'description'},
-        'food_group' => $food_group,
+        'food_group' => $food_group_code,
         'id' => $food_id
     };
+
+    $food_db->{$food_id}->{'food_group_code'} = $food_group_code;
 
     delete $food_db->{$food_id}->{'sort_order'};
     delete $food_db->{$food_id}->{'food_id'};
